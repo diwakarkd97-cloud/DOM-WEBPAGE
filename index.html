@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="page-wrapper">
+        
+        <section class="card form-card">
+            <header class="section-header">
+                <h1>Student Registration</h1>
+                <p>Fill out all mandatory fields below to register a student record.</p>
+            </header>
+
+            <form id="studentForm" novalidate>
+                <div class="form-grid">
+                    <!-- First Name -->
+                    <div class="form-group">
+                        <label for="firstName">First Name <span class="required">*</span></label>
+                        <input type="text" id="firstName" name="firstName" placeholder="e.g., Diwa" required>
+                        <span class="error-message" id="firstNameError">First name is required</span>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="form-group">
+                        <label for="lastName">Last Name <span class="required">*</span></label>
+                        <input type="text" id="lastName" name="lastName" placeholder="e.g., Doe" required>
+                        <span class="error-message" id="lastNameError">Last name is required</span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group full-width">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="jane.doe@example.com" required>
+                        <span class="error-message" id="emailError">Enter a valid email address</span>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="form-group full-width">
+                        <label for="address">Address <span class="required">*</span></label>
+                        <textarea id="address" name="address" placeholder="Street, apartment, landmark" required></textarea>
+                        <span class="error-message" id="addressError">Address is required</span>
+                    </div>
+
+                    <!-- Pincode -->
+                    <div class="form-group">
+                        <label for="pincode">Pincode <span class="required">*</span></label>
+                        <input type="text" id="pincode" name="pincode" placeholder="6-digit pincode" maxlength="10" required>
+                        <span class="error-message" id="pincodeError">Pincode is required</span>
+                    </div>
+
+                    <!-- Gender Radio Group -->
+                    <div class="form-group">
+                        <label>Gender <span class="required">*</span></label>
+                        <div class="radio-group" role="radiogroup" aria-labelledby="gender-label">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="Male" required>
+                                <span class="radio-custom"></span> Male
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="Female">
+                                <span class="radio-custom"></span> Female
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="Other">
+                                <span class="radio-custom"></span> Other
+                            </label>
+                        </div>
+                        <span class="error-message" id="genderError">Please select a gender</span>
+                    </div>
+
+                    <!-- State -->
+                    <div class="form-group">
+                        <label for="state">State <span class="required">*</span></label>
+                        <input type="text" id="state" name="state" placeholder="e.g., Tamil Nadu" required>
+                        <span class="error-message" id="stateError">State is required</span>
+                    </div>
+
+                    <!-- Country -->
+                    <div class="form-group">
+                        <label for="country">Country <span class="required">*</span></label>
+                        <input type="text" id="country" name="country" placeholder="e.g., India" required>
+                        <span class="error-message" id="countryError">Country is required</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="submitBtn" class="btn btn-primary">Submit Record</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Dynamic Output Table Section -->
+        <section class="card table-card">
+            <header class="section-header">
+                <h2>Registered Students</h2>
+                <p>New submissions append to this list in real time.</p>
+            </header>
+
+            <div class="table-container">
+                <table id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Pincode</th>
+                            <th>Gender</th>
+                            <th>State</th>
+                            <th>Country</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                        <tr id="emptyPlaceholder">
+                            <td colspan="8" class="empty-state">No records submitted yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

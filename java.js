@@ -1,110 +1,47 @@
+// Find the form element on the page using its ID
+const studentForm = document.getElementById('studentForm');
 
-document.addEventListener('DOMContentLoaded', () => {
-    const studentForm = document.getElementById('studentForm');
-    const tableBody = document.getElementById('studentTableBody');
-    const emptyPlaceholder = document.getElementById('emptyPlaceholder');
-
-    studentForm.addEventListener('submit', (event) => { 
-        event.preventDefault();
-
-        if (validateForm()) {
-        
-            const formData = extractFormData();
-            
-            insertTableRow(formData);
-
-            if (emptyPlaceholder) {
-                emptyPlaceholder.remove();
-            }
-
-            studentForm.reset();
-
-            clearValidationState();
-        }
-    });
-
-    function extractFormData() {
-        // Radio button requires querying the currently checked element in the group
-        const selectedGender = document.querySelector('input[name="gender"]:checked');
-
-        return {
-            firstName: document.getElementById('firstName').value.trim(),
-            lastName: document.getElementById('lastName').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            address: document.getElementById('address').value.trim(),
-            pincode: document.getElementById('pincode').value.trim(),
-            gender: selectedGender ? selectedGender.value : '',
-            state: document.getElementById('state').value.trim(),
-            country: document.getElementById('country').value.trim()
-        };
-    }
+// Listen for the user to click the Submit button
+studentForm.addEventListener('click', function(event) {
     
-    function validateForm() {
-        let isValid = true;
+    event.preventDefault();    // Stop the page from reloading when the form is submitted
 
-        const fields = [
-            'firstName',
-            'lastName',
-            'email',
-            'address',
-            'pincode',
-            'state',
-            'country'
-        ];
+    const firstName = document.getElementById('firstName').value;   // Get the text that the user typed into each input box
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const pincode = document.getElementById('pincode').value;
+    const state = document.getElementById('state').value;
+    const country = document.getElementById('country').value;
+    
+    // Find which gender radio button was selected
+    const gender = document.querySelector('input[name="gender"]:checked').value;
 
-        fields.forEach((fieldId) => {
-            const input = document.getElementById(fieldId);
-            const parentGroup = input.closest('.form-group');
-
-            if (!input.value.trim()) {
-                parentGroup.classList.add('has-error');
-                isValid = false;
-            } else {
-                parentGroup.classList.remove('has-error');
-            }
-        });
-        
-        const emailInput = document.getElementById('email');
-        const genderSelected = document.querySelector('input[name="gender"]:checked');
-        const genderError = document.getElementById('genderError');
-        const genderGroup = genderError.closest('.form-group');
-
-        if (!genderSelected) {
-            genderGroup.classList.add('has-error');
-            isValid = false;
-        } else {
-            genderGroup.classList.remove('has-error');
-        }
-        return isValid;
+    const tableBody = document.getElementById('studentTableBody'); //  Find the table body where we need to put the new data
+    
+    //  Check if the "No records submitted yet" message is still there, and remove it
+    const emptyPlaceholder = document.getElementById('emptyPlaceholder');
+    if (emptyPlaceholder) {
+        emptyPlaceholder.remove();
     }
 
-    function insertTableRow(data) {
-        const row = document.createElement('tr');
+    
+    const newRow = document.createElement('tr');   // Create a new empty table row (<tr>)
 
-        const cellKeys = [
-            'firstName',
-            'lastName',
-            'email',
-            'address',
-            'pincode',
-            'gender',
-            'state',
-            'country'
-        ];
+    //  Put the user's data inside the new row as table cells (<td>)
+    newRow.innerHTML = `
+        <td>${firstName}</td>
+        <td>${lastName}</td>
+        <td>${email}</td>
+        <td>${address}</td>
+        <td>${pincode}</td>
+        <td>${gender}</td>
+        <td>${state}</td>
+        <td>${country}</td>
+    `;
 
-        cellKeys.forEach((key) => {
-            const td = document.createElement('td');
-            td.textContent = data[key]; 
-            row.appendChild(td);
-        });
+    
+    tableBody.appendChild(newRow);   //  Add the new row to the bottom of the table
 
-        tableBody.appendChild(row);
-    }
-
-    function clearValidationState() {
-        const errorGroups = document.querySelectorAll('.form-group.has-error');
-        errorGroups.forEach((group) => {
-            group.classList.remove('has-error');
-        });
-    }
+    studentForm.reset();             //  Clear all the input boxes so the form is ready for the next person
 });
